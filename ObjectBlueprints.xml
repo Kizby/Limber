@@ -1,0 +1,9 @@
+<objects>
+    <object Name="LimberTonic" Inherits="Tonic">
+        <part Name="Render" DisplayName="{{r-r-r-R-R-W distribution|limbic fluid}} injector" />
+        <part Name="Limber.Limber_Tonic_Applicator" />
+        <part Name="RulesDescription" Text="Become a Chimera. If already a Chimera, you gain either a permanent +1 bonus rank to a random physical mutation or a new limb." AltForGenotype="True Kin" GenotypeAlt="You gain a permenant +1 bonus to a random physical attribute." />
+        <part Name="TinkerItem" Bits="06" Ingredient="Arsplice Seed" />
+        <part Name="Commerce" Value="100" />
+    </object>
+</objects>
