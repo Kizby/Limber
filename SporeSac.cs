@@ -60,13 +60,21 @@ namespace XRL.World.Parts.Limber
                     return true;
                 }
 
-                BodyPart part = Utility.ChooseBodyPart(target, "Apply " + ParentObject.DisplayNameOnly,
+                BodyPart part = Utility.ChooseBodyPart(target, "Apply " + ParentObject.DisplayNameOnly + " to",
                     FungalSporeInfection.BodyPartSuitableForFungalInfection);
                 if (null == part) {
                     // cancelled out
                     return true;
                 }
                 FungalSporeInfection.ApplyFungalInfection(target, Infection, part);
+
+                if (E.Actor.IsPlayer() && !target.IsPlayer()) {
+                    // ApplyFungalInfection didn't popup, so we need to
+                    var blueprint = GameObjectFactory.Factory.Blueprints[Infection];
+                    target.pPhysics.PlayWorldSound("FungalInfectionAcquired");
+                    Popup.Show(target.The + target.ShortDisplayName + " has contracted " + blueprint.DisplayName() + " on " + target.its + " " + part.GetOrdinalName() + ".");
+                }
+
                 this.ParentObject.Destroy();
             }
             return true;
