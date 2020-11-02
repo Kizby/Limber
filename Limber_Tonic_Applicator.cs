@@ -4,6 +4,7 @@ namespace XRL.World.Parts.Limber
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Language;
     using Sheeter;
     using UI;
@@ -67,17 +68,22 @@ namespace XRL.World.Parts.Limber
                                          " psychic cage.");
                         } else if (!target.IsChimera()) {
                             var mentals = target.GetMentalMutations();
+                            var mentalDefects = target.GetMutationsOfCategory("MentalDefects");
                             var mpToTransfer = 0;
-                            if (mentals.Count > 0) {
+                            if (mentals.Count > 0 || mentalDefects.Count > 0) {
                                 Messages.Add((target.IsPlayer() ? "Your" :
                                                                   Grammar.MakePossessive(target.The + target.ShortDisplayName)) +
                                              " genome sloughs off superfluous layers of alien thoughtstuff.");
+                                Messages.Add("");
+                            }
+                            if (mentals.Count > 0) {
                                 // choose 1d4 MP of investment in mental mutations to remove...
                                 mpToTransfer = Random.Next(1, 5);
                                 var totalLevels = mentals.Map(m => m.BaseLevel).Sum();
                                 var toReduce = new List<Tuple<BaseMutation, int>>(mpToTransfer);
-                                if (totalLevels < mpToTransfer) {
+                                if (totalLevels <= mpToTransfer) {
                                     // remove everything, will be eligible for Chimera
+                                    mpToTransfer = totalLevels;
                                     foreach (var mental in mentals) {
                                         toReduce.Add(Tuple.Create(mental, mental.BaseLevel));
                                     }
@@ -87,7 +93,7 @@ namespace XRL.World.Parts.Limber
                                     var remainingReduction = mpToTransfer;
                                     foreach (var mental in mentals) {
                                         var thisMentalReduction = 0;
-                                        while (0 < remainingReduction && Random.Next(0, remainingLevels) < mental.BaseLevel - thisMentalReduction) {
+                                        while (0 < remainingReduction && Random.Next(0, remainingLevels) < mental.BaseLevel - thisMentalReduction + remainingReduction - 1) {
                                             ++thisMentalReduction;
                                             --remainingLevels;
                                             --remainingReduction;
@@ -114,9 +120,6 @@ namespace XRL.World.Parts.Limber
                                         // reduce the mutation level
                                         mutations.LevelMutation(mutation, mutation.BaseLevel - reduction);
                                     }
-                                }
-                                if (0 < lostMentals.Count) {
-                                    Messages.Add("");
                                 }
                                 // ... and replace any lost mental mutations with physical mutations
                                 foreach (var mental in lostMentals) {
@@ -148,21 +151,48 @@ namespace XRL.World.Parts.Limber
                                     var underMaxLevel = physicals.Where(m => m.BaseLevel < m.MaxLevel);
                                     if (0 < underMaxLevel.Count()) {
                                         which = underMaxLevel.GetRandomElement(Random);
-                                    } else {
-                                        // nothing to level
                                     }
                                 }
                                 if (null != which) {
                                     mutations.LevelMutation(which, which.BaseLevel + 1);
+                                    --mpToTransfer;
+                                } else {
+                                    // no physical mutations to put the levels in, spend the rest on a new one
+                                    var eligiblePhysicals = mutations.GetMutatePool(m => m.Category.Name.EndsWith("Physical")).Shuffle(Random);
+                                    foreach (var physical in eligiblePhysicals) {
+                                        mutations.AddMutation(physical, 1);
+                                        Messages.Add(goodColor +
+                                                     (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
+                                                     target.GetVerb("gain") + " " + physical.DisplayName + "!");
+                                        break;
+                                    }
+                                    mpToTransfer = 0;
                                 }
-                                --mpToTransfer;
                             }
                             if (0 == target.GetMentalMutations().Count) {
+                                foreach (var mutation in mentalDefects) {
+                                    mutations.RemoveMutation(mutation);
+
+                                    var mental = mutation.GetMutationEntry();
+                                    Messages.Add(goodColor + 
+                                                 (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
+                                                 target.GetVerb("lose") + " " + mental.DisplayName + "!");
+
+                                    var eligibleDefects = MutationFactory.GetMutationsOfCategory("PhysicalDefects").Shuffle(Random);
+                                    var similarDefects = eligibleDefects.Where(p => p.Cost == mental.Cost);
+                                    var otherDefects = eligibleDefects.Where(p => p.Cost != mental.Cost);
+                                    foreach (var physical in similarDefects.Concat(otherDefects)) {
+                                        mutations.AddMutation(physical, 1);
+                                        Messages.Add(badColor +
+                                                     (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
+                                                     target.GetVerb("gain") + " " + physical.DisplayName + "!");;
+                                        break;
+                                    } // else if there are no valid physical defects, don't add anything new
+                                }
+
                                 target.Property["MutationLevel"] = 
                                     target.Property.GetValueOrDefault("MutationLevel", "") + "Chimera";
-                                if (0 < Messages.Count) {
-                                    Messages.Add("");
-                                }
+                                Messages.Add("");
                                 Messages.Add(goodColor +
                                              (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                              target.GetVerb("become") + " a Chimera!");
@@ -203,7 +233,9 @@ namespace XRL.World.Parts.Limber
                     }
                 }
                 if (target.IsPlayer() && 0 < Messages.Count()) {
-                    Popup.Show(String.Join("\n", Messages));
+                    var output = String.Join("\n", Messages);
+                    output = Regex.Replace(output, "\n\n+", "\n\n");
+                    Popup.Show(output);
                 } else {
                     foreach (var Message in Messages) {
                         AddPlayerMessage(Message);
