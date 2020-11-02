@@ -39,11 +39,11 @@
         <tag Name="Gender" Value="plural" />
         <intproperty Name="Bleeds" Value="0" />
     </object>
-    <object Name="LimberSporeSac" Inherits="Item">
+    <object Name="LimberSporeSac" Inherits="Grenade">
         <part Name="Render" Tile="items/sw_orb.bmp" DisplayName="spore sac" RenderString="%" DetailColor="M" />
-        <part Name="Physics" Category="Applicators" />
         <part Name="Description" Short="A billion futures yearn to germinate in yielding flesh." />
         <part Name="Applicator" />
+        <part Name="GasGrenade" />
         <part Name="Limber.SporeSac" />
     </object>
     <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">

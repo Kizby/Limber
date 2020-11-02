@@ -12,6 +12,7 @@ namespace XRL.World.Parts.Limber
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) || ID == BeforeDeathRemovalEvent.ID;
 
         public override bool HandleEvent(BeforeDeathRemovalEvent E) {
+            // change what's butchered from this to match the original species
             string species = ParentObject.GetSpecies();
             if (null != species) {
                 CorpseObject = GameObject.create(CorpseBlueprint);

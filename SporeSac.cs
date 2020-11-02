@@ -3,6 +3,7 @@ using Wintellect.PowerCollections;
 
 namespace XRL.World.Parts.Limber
 {
+    using System.Collections.Generic;
     using Effects;
     using Mutation;
     using Rules;
@@ -11,18 +12,37 @@ namespace XRL.World.Parts.Limber
 
     [Serializable]
     public class SporeSac : IPart {
-        public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) || ID == InventoryActionEvent.ID;
+        private string _Infection = null;
+        public string Infection => _Infection;
+
+
+        public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) ||
+                                                               ID == ObjectCreatedEvent.ID ||
+                                                               ID == InventoryActionEvent.ID;
+
+        public override bool HandleEvent(ObjectCreatedEvent E) {
+            var PuffObject = GetPropertyOrTag("PuffObject");
+            if (PuffObject.Length == 1)
+            {
+                // RNG magic until/unless SporePuffer adopts a sane randomization strategy
+                int which = Convert.ToInt32(PuffObject);
+                Stat.ReseedFrom("PufferType");
+                int mapped = Algorithms.RandomShuffle(new List<int>{0, 1, 2, 3})[which];
+                
+                _Infection = SporePuffer.InfectionObjectList[mapped];
+                var Gas = SporePuffer.InfectionList[mapped];
+                ParentObject.GetPart<GasGrenade>().GasObject = Gas;
+
+                // a bit heavy-handed, but this way we don't have to hook anything in GasGrenade
+                var GasBlueprint = GameObjectFactory.Factory.Blueprints[Gas];
+                GasBlueprint.GetPart("Render").Parameters["ColorString"] = ParentObject.GetPart<Render>().ColorString;
+
+            }
+            return true;
+        }
 
         public override bool HandleEvent(InventoryActionEvent E) {
             if (E.Command == "Apply" && E.Actor.CheckFrozen()) {
-                var Infection = GetPropertyOrTag("PuffObject");
-                if (Infection.Length == 1)
-                {
-                    // RNG magic until/unless SporePuffer adopts a sane randomization strategy
-                    Stat.ReseedFrom("PufferType");
-                    Infection = Algorithms.RandomShuffle<string>(SporePuffer.InfectionObjectList)[Convert.ToInt32(Infection)];
-                }
-
                 GameObject target = E.Actor;
                 if (E.Actor.IsPlayer()) {
                     Cell cell = PickDirection(POV: E.Actor);
