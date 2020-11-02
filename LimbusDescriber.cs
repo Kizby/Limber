@@ -1,11 +1,10 @@
 using HistoryKit;
 
-namespace XRL.World.Limbus
+namespace XRL.World.Limber
 {
     using SimpleJSON;
     using System.IO;
     using System.Linq;
-    using XRL.World.Limber;
 
     [HasModSensitiveStaticCache]
     public static class LimbusDescriber
