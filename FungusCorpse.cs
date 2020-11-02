@@ -1,12 +1,11 @@
 using System;
 
-namespace XRL.World.Parts
+namespace XRL.World.Parts.Limber
 {
     using XRL.Language;
 
     [Serializable]
-    [HasGameBasedStaticCache]
-    public class LimberFungusCorpse : Corpse
+    public class FungusCorpse : Corpse
     {
         public override bool SameAs(IPart p) => false;
 

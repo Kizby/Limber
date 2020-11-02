@@ -29,7 +29,7 @@
         spore sac generation
     -->
     <object Name="LimberFungusCorpse" Inherits="Corpse">
-        <part Name="Render" DisplayName="mycelial remnants" ColorString="&amp;M"/>
+        <part Name="Render" DisplayName="mycelial remnants" TileColor="&amp;M"/>
         <part Name="Food" Message="They taste earthy." />
         <part Name="Description" Short="Though shorn from structure and script, the mushroom's parts are no less alive than their antecedent." />
         <part Name="Butcherable" OnSuccess="LimberSporeSac" />
@@ -41,8 +41,10 @@
     </object>
     <object Name="LimberSporeSac" Inherits="Item">
         <part Name="Render" Tile="items/sw_orb.bmp" DisplayName="spore sac" RenderString="%" DetailColor="M" />
-        <part Name="Physics" Weight="1" />
+        <part Name="Physics" Category="Applicators" />
         <part Name="Description" Short="A billion futures yearn to germinate in yielding flesh." />
+        <part Name="Applicator" />
+        <part Name="Limber.SporeSac" />
     </object>
     <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
@@ -62,6 +64,6 @@
     </object>
 
     <object Name="FungusPuffer" Load="Merge">
-        <part Name="LimberFungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
+        <part Name="Limber.FungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
     </object>
 </objects>
