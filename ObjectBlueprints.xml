@@ -1,4 +1,7 @@
 <objects>
+    <!--
+        limbic fluid injector et al
+    -->
     <object Name="LimberTonic" Inherits="Tonic">
         <part Name="Render" DisplayName="{{r-r-r-R-R-W distribution|limbic fluid}} injector" />
         <part Name="Limber.Limber_Tonic_Applicator" />
@@ -20,5 +23,45 @@
         <tag Name="Units" Value="Limber.CookingDomainLimbs_UnitLimbs_25Percent" />
         <tag Name="Description" Value="uncertain physical-augmentation-based" />
         <tag Name="RandomWeight" Value="0" />
+    </object>
+
+    <!--
+        spore sac generation
+    -->
+    <object Name="LimberFungusCorpse" Inherits="Corpse">
+        <part Name="Render" DisplayName="mycelial remnants" ColorString="&amp;M"/>
+        <part Name="Food" Message="They taste earthy." />
+        <part Name="Description" Short="Though shorn from structure and script, the mushroom's parts are no less alive than their antecedent." />
+        <part Name="Butcherable" OnSuccess="LimberSporeSac" />
+        <tag Name="Fungus" />
+        <tag Name="LiveFungus" />
+        <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+        <tag Name="Gender" Value="plural" />
+        <intproperty Name="Bleeds" Value="0" />
+    </object>
+    <object Name="LimberSporeSac" Inherits="Item">
+        <part Name="Render" Tile="items/sw_orb.bmp" DisplayName="spore sac" RenderString="%" DetailColor="M" />
+        <part Name="Physics" Weight="1" />
+        <part Name="Description" Short="A billion futures yearn to germinate in yielding flesh." />
+    </object>
+    <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
+        <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
+        <property Name="PuffObject" Value="0" />
+    </object>
+    <object Name="LimberSporeSacAzurepuff" Inherits="LimberSporeSac">
+        <part Name="Render" DisplayName="&amp;Bazure&amp;y spore sac" ColorString="&amp;B" />
+        <property Name="PuffObject" Value="1" />
+    </object>
+    <object Name="LimberSporeSacRosepuff" Inherits="LimberSporeSac">
+        <part Name="Render" DisplayName="&amp;Rrose&amp;y spore sac" ColorString="&amp;R" />
+        <property Name="PuffObject" Value="2" />
+    </object>
+    <object Name="LimberSporeSacJadepuff" Inherits="LimberSporeSac">
+        <part Name="Render" DisplayName="&amp;Gjade&amp;y spore sac" ColorString="&amp;G" />
+        <property Name="PuffObject" Value="3" />
+    </object>
+
+    <object Name="FungusPuffer" Load="Merge">
+        <part Name="LimberFungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
     </object>
 </objects>
