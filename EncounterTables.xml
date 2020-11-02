@@ -1,0 +1,7 @@
+<encountertables>
+    <encountertable Name="MegaMeds" Load="Merge">
+        <objects>
+            <object Chance="10" Number="1d1" Blueprint="LimberTonic"></object>
+        </objects>
+    </encountertable>
+</encountertables>
