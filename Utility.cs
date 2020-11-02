@@ -14,10 +14,10 @@ namespace XRL.World.Limber
         }
 
         private static Dictionary<string, Random> RandomDict = new Dictionary<string, Random>();
-        public static Random Random(IPart part, GameObject target = null) {
+        public static Random Random(Object part, GameObject target = null) {
             string key = "Kizby_Limber_" + part.GetType().Name;
-            if (null != target || null != part.ParentObject) {
-                key += "_" + (target?.id ?? part.ParentObject.id);
+            if (null != target) {
+                key += "_" + target.id;
             }
             if (!RandomDict.ContainsKey(key)) {
                 MaybeLog("Creating Random " + key);
