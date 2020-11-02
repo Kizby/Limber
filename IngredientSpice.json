@@ -1,0 +1,9 @@
+{
+    "LimberDrop": {
+        "adj": [ "<^.adj1.!random>", "<^.adj2.!random>" ],
+        "adj1": [ "primal" ],
+        "adj2": [ "primal", "tentacular", "fractal" ],
+        "nounPlural": [ "limbus" ],
+        "noun": [ "limbus" ]
+    }
+}

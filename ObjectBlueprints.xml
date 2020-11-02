@@ -4,6 +4,21 @@
         <part Name="Limber.Limber_Tonic_Applicator" />
         <part Name="RulesDescription" Text="Become a Chimera. If already a Chimera, you gain either a permanent +1 bonus rank to a random physical mutation or a new limb." AltForGenotype="True Kin" GenotypeAlt="You gain a permenant +1 bonus to a random physical attribute." />
         <part Name="TinkerItem" Bits="06" Ingredient="Arsplice Seed" />
+        <part Name="PreservableItem" Result="LimberDrop" Number="1" />
+        <tag Name="ChooseToPreserve" />
         <part Name="Commerce" Value="100" />
+    </object>
+    <object Name="LimberDrop" Inherits="Preservable">
+        <part Name="Render" DisplayName="drop of {{r-r-r-R-R-W distribution|limbus}}" RenderString="%" ColorString="&amp;r" TileColor="&amp;W" DetailColor="r" RenderLayer="5" Tile="Items/sw_sparktick_plasma.bmp" />
+        <part Name="Commerce" Value="100" />
+        <part Name="Description" Short="Clotted limbic fluid released from its glass prison breathes in the salt air and quivers with anticipation." />
+        <part Name="PreparedCookingIngredient" type="limberLimbs" charges="1" />
+        <tag Name="ServingType" Value="drop" />
+        <tag Name="ServingName" Value="&amp;rl&amp;Ri&amp;Wm&amp;Rb&amp;rus" />
+    </object>
+    <object Name="ProceduralCookingIngredient_limberLimbs" Inherits="IngredientMapping">
+        <tag Name="Units" Value="Limber.CookingDomainLimbs_UnitLimbs_25Percent" />
+        <tag Name="Description" Value="uncertain physical-augmentation-based" />
+        <tag Name="RandomWeight" Value="0" />
     </object>
 </objects>
