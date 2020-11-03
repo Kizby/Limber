@@ -13,13 +13,13 @@ namespace XRL.World.Parts
     [Serializable]
     public class LimberSporeSac : IPart {
         public string Infection = null;
-
+        public static string[] Colors = {"Gold", "Azure", "Rose", "Jade"};
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) ||
                                                                ID == ObjectCreatedEvent.ID ||
                                                                ID == InventoryActionEvent.ID;
 
         public override bool HandleEvent(ObjectCreatedEvent E) {
-            var PuffObject = GetPropertyOrTag("PuffObject");
+            var PuffObject = ParentObject.GetPropertyOrTag("PuffObject");
             if (PuffObject.Length == 1)
             {
                 // RNG magic until/unless SporePuffer adopts a sane randomization strategy
@@ -34,7 +34,8 @@ namespace XRL.World.Parts
                 // a bit heavy-handed, but this way we don't have to hook anything in GasGrenade
                 var GasBlueprint = GameObjectFactory.Factory.Blueprints[Gas];
                 GasBlueprint.GetPart("Render").Parameters["ColorString"] = ParentObject.GetPart<Render>().ColorString;
-
+                GasBlueprint.Props["Color"] = Colors[which];
+                GasBlueprint.Tags["GasGenerationName"] = Colors[which] + " Spore Puffing";
             }
             return true;
         }

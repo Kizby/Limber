@@ -28,6 +28,10 @@
     <!--
         spore sacs
     -->
+    <object Name="FungusPuffer" Load="Merge">
+        <part Name="LimberFungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
+    </object>
+
     <object Name="LimberFungusCorpse" Inherits="Corpse">
         <part Name="Render" DisplayName="mycelial remnants" TileColor="&amp;M"/>
         <part Name="Food" Message="They taste earthy." />
@@ -50,25 +54,72 @@
         <removepart Name="TinkerItem" />
         <part Name="Commerce" Value="0" />
         <property Name="Understood" />
+        <tag Name="ChooseToPreserve" />
     </object>
     <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
         <property Name="PuffObject" Value="0" />
+        <part Name="PreservableItem" Result="LimberPreservedGoldpuff" Number="8" />
     </object>
     <object Name="LimberSporeSacAzurepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Bazure&amp;y spore sac" ColorString="&amp;B" />
         <property Name="PuffObject" Value="1" />
+        <part Name="PreservableItem" Result="LimberPreservedAzurepuff" Number="8" />
     </object>
     <object Name="LimberSporeSacRosepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Rrose&amp;y spore sac" ColorString="&amp;R" />
         <property Name="PuffObject" Value="2" />
+        <part Name="PreservableItem" Result="LimberPreservedRosepuff" Number="8" />
     </object>
     <object Name="LimberSporeSacJadepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Gjade&amp;y spore sac" ColorString="&amp;G" />
         <property Name="PuffObject" Value="3" />
+        <part Name="PreservableItem" Result="LimberPreservedJadepuff" Number="8" />
     </object>
 
-    <object Name="FungusPuffer" Load="Merge">
-        <part Name="Limber.FungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
+    <object Name="LimberPreservedGoldpuff" Inherits="Pickled Mushrooms">
+        <part Name="Render" DisplayName="{{W-W-M distribution|auric}} pearls" DetailColor="W" />
+        <part Name="Description" Short="Reglomerated into palatable morsels, the gold spores still seem somehow eager." />
+        <part Name="PreparedCookingIngredient" type="fungus,limberGoldpuff" charges="1" />
+    </object>
+    <object Name="LimberPreservedAzurepuff" Inherits="Pickled Mushrooms">
+        <part Name="Render" DisplayName="{{B-B-M distribution|azure}} pearls" DetailColor="B" />
+        <part Name="Description" Short="Reglomerated into palatable morsels, the azure spores still seem somehow eager." />
+        <part Name="PreparedCookingIngredient" type="fungus,limberAzurepuff" charges="1" />
+    </object>
+    <object Name="LimberPreservedRosepuff" Inherits="Pickled Mushrooms">
+        <part Name="Render" DisplayName="{{R-R-M distribution|rose}} pearls" DetailColor="R" />
+        <part Name="Description" Short="Reglomerated into palatable morsels, the rose spores still seem somehow eager." />
+        <part Name="PreparedCookingIngredient" type="fungus,limberRosepuff" charges="1" />
+    </object>
+    <object Name="LimberPreservedJadepuff" Inherits="Pickled Mushrooms">
+        <part Name="Render" DisplayName="{{G-G-M distribution|jade}} pearls" DetailColor="G" />
+        <part Name="Description" Short="Reglomerated into palatable morsels, the jade spores still seem somehow eager." />
+        <part Name="PreparedCookingIngredient" type="fungus,limberJadepuff" charges="1" />
+    </object>
+
+    <object Name="ProceduralCookingIngredient_limberGoldpuff" Inherits="IngredientMapping">
+        <tag Name="Units" Value="LimberCookingDomainFungus_UnitGoldpuff" />
+        <tag Name="Description" Value="gold fungus-based" />
+        <tag Name="RandomWeight" Value="0" />
+        <property Name="PuffObject" Value="0" />
+    </object>
+    <object Name="ProceduralCookingIngredient_limberAzurepuff" Inherits="IngredientMapping">
+        <tag Name="Units" Value="LimberCookingDomainFungus_UnitAzurepuff" />
+        <tag Name="Description" Value="azure fungus-based" />
+        <tag Name="RandomWeight" Value="0" />
+        <property Name="PuffObject" Value="1" />
+    </object>
+    <object Name="ProceduralCookingIngredient_limberRosepuff" Inherits="IngredientMapping">
+        <tag Name="Units" Value="LimberCookingDomainFungus_UnitRosepuff" />
+        <tag Name="Description" Value="rose fungus-based" />
+        <tag Name="RandomWeight" Value="0" />
+        <property Name="PuffObject" Value="2" />
+    </object>
+    <object Name="ProceduralCookingIngredient_limberJadepuff" Inherits="IngredientMapping">
+        <tag Name="Units" Value="LimberCookingDomainFungus_UnitJadepuff" />
+        <tag Name="Description" Value="jade fungus-based" />
+        <tag Name="RandomWeight" Value="0" />
+        <property Name="PuffObject" Value="3" />
     </object>
 </objects>
