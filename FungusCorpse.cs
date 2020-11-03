@@ -1,11 +1,11 @@
 using System;
 
-namespace XRL.World.Parts.Limber
+namespace XRL.World.Parts
 {
     using XRL.Language;
 
     [Serializable]
-    public class FungusCorpse : Corpse
+    public class LimberFungusCorpse : Corpse
     {
         public override bool SameAs(IPart p) => false;
 

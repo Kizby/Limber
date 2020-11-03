@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Qud.API;
 
-namespace XRL.World.Effects.Limber
+namespace XRL.World.Effects
 {
     using Core;
     using World.Limber;
@@ -11,7 +11,7 @@ namespace XRL.World.Effects.Limber
     using XRL.UI;
 
     [Serializable]
-    public class CookingDomainLimbs_UnitLimbs_25Percent : ProceduralCookingEffectUnit
+    public class LimberCookingDomainLimbs_UnitLimbs_25Percent : ProceduralCookingEffectUnit
     {
         public double PartsPerPart = 0.5;
         public int PartsGained;

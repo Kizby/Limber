@@ -1,6 +1,6 @@
 using System;
 
-namespace XRL.World.Parts.Limber
+namespace XRL.World.Parts
 {
     using System.Collections.Generic;
     using System.Linq;

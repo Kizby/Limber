@@ -1,7 +1,7 @@
 using System;
 using Wintellect.PowerCollections;
 
-namespace XRL.World.Parts.Limber
+namespace XRL.World.Parts
 {
     using System.Collections.Generic;
     using Effects;
@@ -11,10 +11,8 @@ namespace XRL.World.Parts.Limber
     using XRL.UI;
 
     [Serializable]
-    public class SporeSac : IPart {
-        private string _Infection = null;
-        public string Infection => _Infection;
-
+    public class LimberSporeSac : IPart {
+        public string Infection = null;
 
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) ||
                                                                ID == ObjectCreatedEvent.ID ||
@@ -29,7 +27,7 @@ namespace XRL.World.Parts.Limber
                 Stat.ReseedFrom("PufferType");
                 int mapped = Algorithms.RandomShuffle(new List<int>{0, 1, 2, 3})[which];
                 
-                _Infection = SporePuffer.InfectionObjectList[mapped];
+                Infection = SporePuffer.InfectionObjectList[mapped];
                 var Gas = SporePuffer.InfectionList[mapped];
                 ParentObject.GetPart<GasGrenade>().GasObject = Gas;
 
@@ -72,7 +70,7 @@ namespace XRL.World.Parts.Limber
                     // ApplyFungalInfection didn't popup, so we need to
                     var blueprint = GameObjectFactory.Factory.Blueprints[Infection];
                     target.pPhysics.PlayWorldSound("FungalInfectionAcquired");
-                    Popup.Show(target.The + target.ShortDisplayName + " has contracted " + blueprint.DisplayName() + " on " + target.its + " " + part.GetOrdinalName() + ".");
+                    Popup.Show(target.The + target.ShortDisplayName + " has contracted " + blueprint.DisplayName() + "&y on " + target.its + " " + part.GetOrdinalName() + ".");
                 }
 
                 this.ParentObject.Destroy();
