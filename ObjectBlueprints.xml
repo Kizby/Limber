@@ -47,7 +47,7 @@
         <part Name="Applicator" />
         <part Name="GasGrenade" />
         <removepart Name="Metal" />
-        <removePart Name="TinkerItem" />
+        <removepart Name="TinkerItem" />
         <part Name="Commerce" Value="0" />
         <property Name="Understood" />
     </object>
