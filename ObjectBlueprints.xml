@@ -78,22 +78,22 @@
     </object>
 
     <object Name="LimberPreservedGoldpuff" Inherits="Pickled Mushrooms">
-        <part Name="Render" DisplayName="{{W-W-M distribution|auric}} pearls" DetailColor="W" />
+        <part Name="Render" DisplayName="{{W-W-W-M sequence|auric}} pearls" DetailColor="W" />
         <part Name="Description" Short="Reglomerated into palatable morsels, the gold spores still seem somehow eager." />
         <part Name="PreparedCookingIngredient" type="fungus,limberGoldpuff" charges="1" />
     </object>
     <object Name="LimberPreservedAzurepuff" Inherits="Pickled Mushrooms">
-        <part Name="Render" DisplayName="{{B-B-M distribution|azure}} pearls" DetailColor="B" />
+        <part Name="Render" DisplayName="{{B-B-B-M sequence|azure}} pearls" DetailColor="B" />
         <part Name="Description" Short="Reglomerated into palatable morsels, the azure spores still seem somehow eager." />
         <part Name="PreparedCookingIngredient" type="fungus,limberAzurepuff" charges="1" />
     </object>
     <object Name="LimberPreservedRosepuff" Inherits="Pickled Mushrooms">
-        <part Name="Render" DisplayName="{{R-R-M distribution|rose}} pearls" DetailColor="R" />
+        <part Name="Render" DisplayName="{{R-R-M sequence|rose}} pearls" DetailColor="R" />
         <part Name="Description" Short="Reglomerated into palatable morsels, the rose spores still seem somehow eager." />
         <part Name="PreparedCookingIngredient" type="fungus,limberRosepuff" charges="1" />
     </object>
     <object Name="LimberPreservedJadepuff" Inherits="Pickled Mushrooms">
-        <part Name="Render" DisplayName="{{G-G-M distribution|jade}} pearls" DetailColor="G" />
+        <part Name="Render" DisplayName="{{G-G-M sequence|jade}} pearls" DetailColor="G" />
         <part Name="Description" Short="Reglomerated into palatable morsels, the jade spores still seem somehow eager." />
         <part Name="PreparedCookingIngredient" type="fungus,limberJadepuff" charges="1" />
     </object>
