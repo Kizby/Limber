@@ -58,22 +58,22 @@
     </object>
     <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
-        <property Name="PuffObject" Value="0" />
+        <property Name="Color" Value="Gold" />
         <part Name="PreservableItem" Result="LimberPreservedGoldpuff" Number="8" />
     </object>
     <object Name="LimberSporeSacAzurepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Bazure&amp;y spore sac" ColorString="&amp;B" />
-        <property Name="PuffObject" Value="1" />
+        <property Name="Color" Value="Azure" />
         <part Name="PreservableItem" Result="LimberPreservedAzurepuff" Number="8" />
     </object>
     <object Name="LimberSporeSacRosepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Rrose&amp;y spore sac" ColorString="&amp;R" />
-        <property Name="PuffObject" Value="2" />
+        <property Name="Color" Value="Rose" />
         <part Name="PreservableItem" Result="LimberPreservedRosepuff" Number="8" />
     </object>
     <object Name="LimberSporeSacJadepuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Gjade&amp;y spore sac" ColorString="&amp;G" />
-        <property Name="PuffObject" Value="3" />
+        <property Name="Color" Value="Jade" />
         <part Name="PreservableItem" Result="LimberPreservedJadepuff" Number="8" />
     </object>
 
@@ -102,24 +102,24 @@
         <tag Name="Units" Value="LimberCookingDomainFungus_UnitGoldpuff" />
         <tag Name="Description" Value="gold fungus-based" />
         <tag Name="RandomWeight" Value="0" />
-        <property Name="PuffObject" Value="0" />
+        <property Name="Color" Value="Gold" />
     </object>
     <object Name="ProceduralCookingIngredient_limberAzurepuff" Inherits="IngredientMapping">
         <tag Name="Units" Value="LimberCookingDomainFungus_UnitAzurepuff" />
         <tag Name="Description" Value="azure fungus-based" />
         <tag Name="RandomWeight" Value="0" />
-        <property Name="PuffObject" Value="1" />
+        <property Name="Color" Value="Azure" />
     </object>
     <object Name="ProceduralCookingIngredient_limberRosepuff" Inherits="IngredientMapping">
         <tag Name="Units" Value="LimberCookingDomainFungus_UnitRosepuff" />
         <tag Name="Description" Value="rose fungus-based" />
         <tag Name="RandomWeight" Value="0" />
-        <property Name="PuffObject" Value="2" />
+        <property Name="Color" Value="Rose" />
     </object>
     <object Name="ProceduralCookingIngredient_limberJadepuff" Inherits="IngredientMapping">
         <tag Name="Units" Value="LimberCookingDomainFungus_UnitJadepuff" />
         <tag Name="Description" Value="jade fungus-based" />
         <tag Name="RandomWeight" Value="0" />
-        <property Name="PuffObject" Value="3" />
+        <property Name="Color" Value="Jade" />
     </object>
 </objects>

@@ -1,4 +1,5 @@
 using System;
+using XRL.World.Limber;
 
 namespace XRL.World.Parts.Mutation
 {
@@ -7,12 +8,7 @@ namespace XRL.World.Parts.Mutation
         public readonly string Color;
         public LimberSporesGeneration(string Color) {
             this.Color = Color;
-            foreach(var Gas in SporePuffer.InfectionList) {
-                if (GameObjectFactory.Factory.Blueprints[Gas].Props["Color"] == Color) {
-                    this.GasObject = Gas;
-                    break;
-                }
-            }
+            this.GasObject = Utility.GetFungalGasFromColor(Color);
             SyncFromBlueprint();
         }
         public override int GetReleaseDuration(int Level) => 1;

@@ -12,31 +12,19 @@ namespace XRL.World.Parts
 
     [Serializable]
     public class LimberSporeSac : IPart {
-        public string Infection = null;
-        public static string[] Colors = {"Gold", "Azure", "Rose", "Jade"};
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) ||
                                                                ID == ObjectCreatedEvent.ID ||
                                                                ID == InventoryActionEvent.ID;
 
         public override bool HandleEvent(ObjectCreatedEvent E) {
-            var PuffObject = ParentObject.GetPropertyOrTag("PuffObject");
-            if (PuffObject.Length == 1)
-            {
-                // RNG magic until/unless SporePuffer adopts a sane randomization strategy
-                int which = Convert.ToInt32(PuffObject);
-                Stat.ReseedFrom("PufferType");
-                int mapped = Algorithms.RandomShuffle(new List<int>{0, 1, 2, 3})[which];
-                
-                Infection = SporePuffer.InfectionObjectList[mapped];
-                var Gas = SporePuffer.InfectionList[mapped];
-                ParentObject.GetPart<GasGrenade>().GasObject = Gas;
+            var Color = ParentObject.Property["Color"];
+            var Gas = Utility.GetFungalGasFromColor(Color);
+            ParentObject.GetPart<GasGrenade>().GasObject = Gas;
 
-                // a bit heavy-handed, but this way we don't have to hook anything in GasGrenade
-                var GasBlueprint = GameObjectFactory.Factory.Blueprints[Gas];
-                GasBlueprint.GetPart("Render").Parameters["ColorString"] = ParentObject.GetPart<Render>().ColorString;
-                GasBlueprint.Props["Color"] = Colors[which];
-                GasBlueprint.Tags["GasGenerationName"] = Colors[which] + " Spore Puffing";
-            }
+            // a bit heavy-handed, but this way we don't have to hook anything in GasGrenade
+            var GasBlueprint = GameObjectFactory.Factory.Blueprints[Gas];
+            GasBlueprint.GetPart("Render").Parameters["ColorString"] = ParentObject.GetPart<Render>().ColorString;
+            GasBlueprint.Tags["GasGenerationName"] = Color + " Spore Puffing";
             return true;
         }
 
@@ -65,6 +53,8 @@ namespace XRL.World.Parts
                     // cancelled out
                     return true;
                 }
+                
+                var Infection = Utility.GetFungalInfectionFromColor(ParentObject.Property["Color"]);
                 FungalSporeInfection.ApplyFungalInfection(target, Infection, part);
 
                 if (E.Actor.IsPlayer() && !target.IsPlayer()) {

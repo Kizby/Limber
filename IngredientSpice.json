@@ -1,9 +1,42 @@
 {
     "LimberDrop": {
-        "adj": [ "<^.adj1.!random>", "<^.adj2.!random>" ],
+        "adj": [ "<spice.cooking.recipeNames.ingredients.LimberDrop.adj1.!random>",
+                 "<spice.cooking.recipeNames.ingredients.LimberDrop.adj2.!random>" ],
         "adj1": [ "primal" ],
         "adj2": [ "primal", "tentacular", "fractal" ],
         "nounPlural": [ "limbus" ],
         "noun": [ "limbus" ]
+    },
+    "LimberPreservedGoldpuff": {
+        "adj": [ "<spice.cooking.recipeNames.ingredients.LimberPreservedGoldpuff.adj1.!random>",
+                 "<spice.cooking.recipeNames.ingredients.LimberPreservedGoldpuff.adj2.!random>" ],
+        "adj1": [ "goldpuff", "fungus", "mottled mushroom" ],
+        "adj2": [ "gold", "auric", "golden", "gilded", "<spice.cooking.recipeNames.ingredients.LimberPreservedGoldpuff.noun.!random>-<spice.cooking.recipeNames.suffix.!random>" ],
+        "nounPlural": [ "pearls", "goldpuffs", "mushrooms", "gills", "fungus" ],
+        "noun": [ "pearl", "goldpuff", "mushroom", "gill", "fungus" ]
+    },
+    "LimberPreservedAzurepuff": {
+        "adj": [ "<spice.cooking.recipeNames.ingredients.LimberPreservedAzurepuff.adj1.!random>",
+                 "<spice.cooking.recipeNames.ingredients.LimberPreservedAzurepuff.adj2.!random>" ],
+        "adj1": [ "azurepuff", "fungus", "mottled mushroom" ],
+        "adj2": [ "azure", "cyanic", "blue", "blue-shifted", "<spice.cooking.recipeNames.ingredients.LimberPreservedAzurepuff.noun.!random>-<spice.cooking.recipeNames.suffix.!random>" ],
+        "nounPlural": [ "pearls", "azurepuffs", "mushrooms", "gills", "fungus" ],
+        "noun": [ "pearl", "azurepuff", "mushroom", "gill", "fungus" ]
+    },
+    "LimberPreservedRosepuff": {
+        "adj": [ "<spice.cooking.recipeNames.ingredients.LimberPreservedRosepuff.adj1.!random>",
+                 "<spice.cooking.recipeNames.ingredients.LimberPreservedRosepuff.adj2.!random>" ],
+        "adj1": [ "rosepuff", "fungus", "mottled mushroom" ],
+        "adj2": [ "rose", "crimson", "red-shifted", "red", "<spice.cooking.recipeNames.ingredients.LimberPreservedRosepuff.noun.!random>-<spice.cooking.recipeNames.suffix.!random>" ],
+        "nounPlural": [ "pearls", "rosepuffs", "mushrooms", "gills", "fungus" ],
+        "noun": [ "pearl", "rosepuff", "mushroom", "gill", "fungus" ]
+    },
+    "LimberPreservedJadepuff": {
+        "adj": [ "<spice.cooking.recipeNames.ingredients.LimberPreservedJadepuff.adj1.!random>",
+                 "<spice.cooking.recipeNames.ingredients.LimberPreservedJadepuff.adj2.!random>" ],
+        "adj1": [ "jadepuff", "fungus", "mottled mushroom" ],
+        "adj2": [ "jade", "green", "verdant", "emerald", "<spice.cooking.recipeNames.ingredients.LimberPreservedJadepuff.noun.!random>-<spice.cooking.recipeNames.suffix.!random>" ],
+        "nounPlural": [ "pearls", "jadepuffs", "mushrooms", "gills", "fungus" ],
+        "noun": [ "pearl", "jadepuff", "mushroom", "gill", "fungus" ]
     }
 }

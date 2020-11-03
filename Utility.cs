@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Wintellect.PowerCollections;
 
 namespace XRL.World.Limber
 {
     using Language;
+    using Parts.Mutation;
+    using Rules;
     using UI;
 
     public static class Utility {
@@ -53,6 +56,16 @@ namespace XRL.World.Limber
             }
 
             return parts[index];
+        }
+
+        public static Dictionary<string, int> ColorIndices = new Dictionary<string, int>{{"Gold", 0}, {"Rose", 1}, {"Azure", 2}, {"Jade", 3}};
+        public static string GetFungalGasFromColor(string Color) {
+            Stat.ReseedFrom("PufferType");
+            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[ColorIndices[Color]];
+        }
+        public static string GetFungalInfectionFromColor(string Color) {
+            Stat.ReseedFrom("PufferType");
+            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[ColorIndices[Color]];
         }
     }
 }
