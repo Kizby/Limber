@@ -1,12 +1,8 @@
 using System;
-using Wintellect.PowerCollections;
 
 namespace XRL.World.Parts
 {
-    using System.Collections.Generic;
     using Effects;
-    using Mutation;
-    using Rules;
     using World.Limber;
     using XRL.UI;
 
@@ -53,7 +49,7 @@ namespace XRL.World.Parts
                     // cancelled out
                     return true;
                 }
-                
+
                 var Infection = Utility.GetFungalInfectionFromColor(ParentObject.Property["Color"]);
                 FungalSporeInfection.ApplyFungalInfection(target, Infection, part);
 
