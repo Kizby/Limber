@@ -55,7 +55,7 @@
         <part Name="Commerce" Value="0" />
         <property Name="Understood" />
         <tag Name="ChooseToPreserve" />
-        <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
+        <tag Name="ExcludeFromDynamicEncounters" />
     </object>
     <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
         <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
