@@ -1,14 +1,13 @@
-using System;
-using XRL.World.Limber;
+namespace XRL.World.Parts.Mutation {
+    using System;
+    using XRL.World.Limber;
 
-namespace XRL.World.Parts.Mutation
-{
     [Serializable]
     public class LimberSporesGeneration : GasGeneration {
         public readonly string Color;
         public LimberSporesGeneration(string Color) {
             this.Color = Color;
-            this.GasObject = Utility.GetFungalGasFromColor(Color);
+            GasObject = Utility.GetFungalGasFromColor(Color);
             SyncFromBlueprint();
         }
         public override int GetReleaseDuration(int Level) => 1;
@@ -18,21 +17,21 @@ namespace XRL.World.Parts.Mutation
 
     [Serializable]
     public class LimberGoldSporesGeneration : LimberSporesGeneration {
-        public LimberGoldSporesGeneration() : base("Gold") {}
+        public LimberGoldSporesGeneration() : base("Gold") { }
     }
 
     [Serializable]
     public class LimberAzureSporesGeneration : LimberSporesGeneration {
-        public LimberAzureSporesGeneration() : base("Azure") {}
+        public LimberAzureSporesGeneration() : base("Azure") { }
     }
 
     [Serializable]
     public class LimberRoseSporesGeneration : LimberSporesGeneration {
-        public LimberRoseSporesGeneration() : base("Rose") {}
+        public LimberRoseSporesGeneration() : base("Rose") { }
     }
 
     [Serializable]
     public class LimberJadeSporesGeneration : LimberSporesGeneration {
-        public LimberJadeSporesGeneration() : base("Jade") {}
+        public LimberJadeSporesGeneration() : base("Jade") { }
     }
 }

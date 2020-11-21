@@ -1,9 +1,7 @@
-using System;
-
-namespace XRL.World.Parts
-{
-    using Effects;
-    using World.Limber;
+namespace XRL.World.Parts {
+    using System;
+    using XRL.World.Effects;
+    using XRL.World.Limber;
     using XRL.UI;
 
     [Serializable]
@@ -12,7 +10,7 @@ namespace XRL.World.Parts
                                                                ID == ObjectCreatedEvent.ID ||
                                                                ID == InventoryActionEvent.ID;
 
-        public override bool HandleEvent(ObjectCreatedEvent E) {
+        public override bool HandleEvent(ObjectCreatedEvent e) {
             var Color = ParentObject.Property["Color"];
             var Gas = Utility.GetFungalGasFromColor(Color);
             ParentObject.GetPart<GasGrenade>().GasObject = Gas;
@@ -24,20 +22,20 @@ namespace XRL.World.Parts
             return true;
         }
 
-        public override bool HandleEvent(InventoryActionEvent E) {
-            if (E.Command == "Apply" && E.Actor.CheckFrozen()) {
-                GameObject target = E.Actor;
-                if (E.Actor.IsPlayer()) {
-                    Cell cell = PickDirection(POV: E.Actor);
-                    target = cell.GetCombatTarget(E.Actor);
-                    if (null == target) {
+        public override bool HandleEvent(InventoryActionEvent e) {
+            if (e.Command == "Apply" && e.Actor.CheckFrozen()) {
+                GameObject target = e.Actor;
+                if (e.Actor.IsPlayer()) {
+                    Cell cell = PickDirection(POV: e.Actor);
+                    target = cell.GetCombatTarget(e.Actor);
+                    if (target == null) {
                         // cancelled out
                         return true;
                     }
                 }
 
                 if (!target.IsPlayerControlled()) {
-                    if (E.Actor.IsPlayer()) {
+                    if (e.Actor.IsPlayer()) {
                         Popup.Show(target.The + target.ShortDisplayName + " refuses your ministrations!");
                     }
                     return true;
@@ -45,22 +43,22 @@ namespace XRL.World.Parts
 
                 BodyPart part = Utility.ChooseBodyPart(target, "Apply " + ParentObject.DisplayNameOnly + " to",
                     FungalSporeInfection.BodyPartSuitableForFungalInfection);
-                if (null == part) {
+                if (part == null) {
                     // cancelled out
                     return true;
                 }
 
                 var Infection = Utility.GetFungalInfectionFromColor(ParentObject.Property["Color"]);
-                FungalSporeInfection.ApplyFungalInfection(target, Infection, part);
+                _ = FungalSporeInfection.ApplyFungalInfection(target, Infection, part);
 
-                if (E.Actor.IsPlayer() && !target.IsPlayer()) {
+                if (e.Actor.IsPlayer() && !target.IsPlayer()) {
                     // ApplyFungalInfection didn't popup, so we need to
                     var blueprint = GameObjectFactory.Factory.Blueprints[Infection];
                     target.pPhysics.PlayWorldSound("FungalInfectionAcquired");
                     Popup.Show(target.The + target.ShortDisplayName + " has contracted " + blueprint.DisplayName() + "&y on " + target.its + " " + part.GetOrdinalName() + ".");
                 }
 
-                this.ParentObject.Destroy();
+                _ = ParentObject.Destroy();
             }
             return true;
         }

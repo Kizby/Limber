@@ -1,20 +1,17 @@
-using System;
-
-namespace XRL.World.Parts
-{
+namespace XRL.World.Parts {
+    using System;
     using XRL.Language;
 
     [Serializable]
-    public class LimberFungusCorpse : Corpse
-    {
+    public class LimberFungusCorpse : Corpse {
         public override bool SameAs(IPart p) => false;
 
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) || ID == BeforeDeathRemovalEvent.ID;
 
         public override bool HandleEvent(BeforeDeathRemovalEvent E) {
             // change what's butchered from this to match the original species
-            string species = ParentObject.GetSpecies();
-            if (null != species) {
+            var species = ParentObject.GetSpecies();
+            if (species != null) {
                 CorpseObject = GameObject.create(CorpseBlueprint);
                 var butcherable = CorpseObject.GetPart<Butcherable>();
                 var toButcher = butcherable.OnSuccess + Grammar.InitialCap(species);

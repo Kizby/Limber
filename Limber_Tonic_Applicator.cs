@@ -1,13 +1,11 @@
-using System;
-
-namespace XRL.World.Parts
-{
+namespace XRL.World.Parts {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Language;
+    using XRL.Language;
     using Sheeter;
-    using UI;
+    using XRL.UI;
     using XRL.World.Capabilities;
     using XRL.World.Limber;
     using XRL.World.Parts.Mutation;
@@ -15,8 +13,9 @@ namespace XRL.World.Parts
     [Serializable]
     [MedNamesExtension]
     public class Limber_Tonic_Applicator : IPart, IMedNamesExtension {
-        public override void Register(GameObject Object)
-        {
+        private static readonly Regex _extraLines = new Regex("\n\n+");
+
+        public override void Register(GameObject Object) {
             Object.RegisterPartEvent(this, "ApplyTonic");
             base.Register(Object);
         }
@@ -40,12 +39,7 @@ namespace XRL.World.Parts
                     var goodColor = ColorCoding.ConsequentialColor(ColorAsGoodFor: target);
                     var badColor = ColorCoding.ConsequentialColor(ColorAsBadFor: target);
                     if (target.IsTrueKin()) {
-                        string which = "Strength";
-                        switch (Random.Next(0, 3)) {
-                            case 0: which = "Strength"; break;
-                            case 1: which = "Agility"; break;
-                            case 2: which = "Toughness"; break;
-                        }
+                        var which = new[] { "Strength", "Agility", "Toughness" }.GetRandomElement(Random);
                         if (target.HasStat(which)) {
                             ++target.Statistics[which].BaseValue;
                             Messages.Add(goodColor +
@@ -61,7 +55,7 @@ namespace XRL.World.Parts
                             if (glimmerReduction > currentGlimmer) {
                                 glimmerReduction = currentGlimmer;
                             }
-                            target.ModIntProperty("GlimmerModifier", -glimmerReduction);
+                            _ = target.ModIntProperty("GlimmerModifier", -glimmerReduction);
                             target.SyncMutationLevelAndGlimmer();
                             Messages.Add("Nerves weave and ossify, unable to escape " +
                                          (target.IsPlayer() ? "your" : Grammar.MakePossessive(target.the + target.ShortDisplayName)) +
@@ -101,7 +95,7 @@ namespace XRL.World.Parts
                                         if (0 < thisMentalReduction) {
                                             toReduce.Add(Tuple.Create(mental, thisMentalReduction));
                                         }
-                                        remainingLevels -= (mental.BaseLevel - thisMentalReduction);
+                                        remainingLevels -= mental.BaseLevel - thisMentalReduction;
                                         if (0 >= remainingReduction) {
                                             break;
                                         }
@@ -125,14 +119,14 @@ namespace XRL.World.Parts
                                 foreach (var mental in lostMentals) {
                                     // expensive to regenerate this each time, but won't be very many times and
                                     // want to make sure exclusions from e.g. Stinger are handled correctly
-                                    Messages.Add(badColor + 
+                                    Messages.Add(badColor +
                                                  (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                  target.GetVerb("lose") + " " + mental.DisplayName + "!");
                                     var eligiblePhysicals = mutations.GetMutatePool(m => m.Category.Name.EndsWith("Physical")).Shuffle(Random);
                                     var similarPhysicals = eligiblePhysicals.Where(p => p.Cost == mental.Cost);
                                     var otherPhysicals = eligiblePhysicals.Where(p => p.Cost != mental.Cost);
                                     foreach (var physical in similarPhysicals.Concat(otherPhysicals)) {
-                                        mutations.AddMutation(physical, 1);
+                                        _ = mutations.AddMutation(physical, 1);
                                         Messages.Add(goodColor +
                                                      (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                      target.GetVerb("gain") + " " + physical.DisplayName + "!");
@@ -145,22 +139,21 @@ namespace XRL.World.Parts
                                 var physicals = target.GetPhysicalMutations();
                                 BaseMutation which = null;
                                 var canLevelNormally = physicals.Where(m => m.CanIncreaseLevel());
-                                if (0 < canLevelNormally.Count()) {
+                                if (canLevelNormally.Any()) {
                                     which = canLevelNormally.GetRandomElement(Random);
                                 } else {
                                     var underMaxLevel = physicals.Where(m => m.BaseLevel < m.MaxLevel);
-                                    if (0 < underMaxLevel.Count()) {
+                                    if (underMaxLevel.Any()) {
                                         which = underMaxLevel.GetRandomElement(Random);
                                     }
                                 }
-                                if (null != which) {
+                                if (which != null) {
                                     mutations.LevelMutation(which, which.BaseLevel + 1);
                                     --mpToTransfer;
                                 } else {
                                     // no physical mutations to put the levels in, spend the rest on a new one
-                                    var eligiblePhysicals = mutations.GetMutatePool(m => m.Category.Name.EndsWith("Physical")).Shuffle(Random);
-                                    foreach (var physical in eligiblePhysicals) {
-                                        mutations.AddMutation(physical, 1);
+                                    foreach (var physical in mutations.GetMutatePool(m => m.Category.Name.EndsWith("Physical")).Shuffle(Random)) {
+                                        _ = mutations.AddMutation(physical, 1);
                                         Messages.Add(goodColor +
                                                      (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                      target.GetVerb("gain") + " " + physical.DisplayName + "!");
@@ -169,12 +162,12 @@ namespace XRL.World.Parts
                                     mpToTransfer = 0;
                                 }
                             }
-                            if (0 == target.GetMentalMutations().Count) {
+                            if (target.GetMentalMutations().Count == 0) {
                                 foreach (var mutation in mentalDefects) {
                                     mutations.RemoveMutation(mutation);
 
                                     var mental = mutation.GetMutationEntry();
-                                    Messages.Add(goodColor + 
+                                    Messages.Add(goodColor +
                                                  (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                  target.GetVerb("lose") + " " + mental.DisplayName + "!");
 
@@ -182,15 +175,15 @@ namespace XRL.World.Parts
                                     var similarDefects = eligibleDefects.Where(p => p.Cost == mental.Cost);
                                     var otherDefects = eligibleDefects.Where(p => p.Cost != mental.Cost);
                                     foreach (var physical in similarDefects.Concat(otherDefects)) {
-                                        mutations.AddMutation(physical, 1);
+                                        _ = mutations.AddMutation(physical, 1);
                                         Messages.Add(badColor +
                                                      (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
-                                                     target.GetVerb("gain") + " " + physical.DisplayName + "!");;
+                                                     target.GetVerb("gain") + " " + physical.DisplayName + "!");
                                         break;
                                     } // else if there are no valid physical defects, don't add anything new
                                 }
 
-                                target.Property["MutationLevel"] = 
+                                target.Property["MutationLevel"] =
                                     target.Property.GetValueOrDefault("MutationLevel", "") + "Chimera";
                                 Messages.Add("");
                                 Messages.Add(goodColor +
@@ -199,15 +192,15 @@ namespace XRL.World.Parts
                             }
                         } else /*target.IsChimera*/ {
                             // 50% chance of new limb, 50% chance of mutation level gain
-                            if (0 == Random.Next(2)) {
+                            if (Random.Next(2) == 0) {
                                 // new limb! defer until the other messages are shown to actually gain it
                                 gainLimb = true;
                             } else {
                                 var physicals = target.GetPhysicalMutations().Where(m => m.CanLevel());
-                                if (0 < physicals.Count()) {
+                                if (physicals.Any()) {
                                     // +1 to level of a physical mutation, uncapped
                                     var which = physicals.GetRandomElement(Random);
-                                    var source = "{{r-r-r-R-R-W distribution|limbic fluid}} injections";
+                                    const string source = "{{r-r-r-R-R-W distribution|limbic fluid}} injections";
                                     var found = false;
                                     foreach (var mod in mutations.MutationMods) {
                                         if (mod.sourceName == source && mod.mutationName == which.Name) {
@@ -216,15 +209,15 @@ namespace XRL.World.Parts
                                         }
                                     }
                                     if (!found) {
-                                        mutations.AddMutationMod(which.Name, 1, Mutations.MutationModifierTracker.SourceType.StatMod, source);
+                                        _ = mutations.AddMutationMod(which.Name, 1, Mutations.MutationModifierTracker.SourceType.StatMod, source);
                                     }
-                                    Messages.Add(goodColor + 
+                                    Messages.Add(goodColor +
                                                  (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                  target.GetVerb("gain") + " one rank of " + which.DisplayName + "!");
                                 } else {
                                     // +1 MP if we can't level anything
                                     target.GainMP(1);
-                                    Messages.Add(goodColor + 
+                                    Messages.Add(goodColor +
                                                  (target.IsPlayer() ? "You" : target.The + target.ShortDisplayName) +
                                                  target.GetVerb("gain") + " one MP!");
                                 }
@@ -232,9 +225,9 @@ namespace XRL.World.Parts
                         }
                     }
                 }
-                if (target.IsPlayer() && 0 < Messages.Count()) {
-                    var output = String.Join("\n", Messages);
-                    output = Regex.Replace(output, "\n\n+", "\n\n");
+                if (target.IsPlayer() && Messages.Count > 0) {
+                    var output = string.Join("\n", Messages);
+                    output = _extraLines.Replace(output, "\n\n");
                     Popup.Show(output);
                 } else {
                     foreach (var Message in Messages) {
@@ -242,13 +235,15 @@ namespace XRL.World.Parts
                     }
                 }
                 if (gainLimb) {
-                    mutations.AddChimericBodyPart();
+                    _ = mutations.AddChimericBodyPart();
                 }
             }
             return base.FireEvent(E);
         }
 
-        // need to add a new tonic description since we're adding a tonic
+        /// <summary>
+        /// need to add a new tonic description since we're adding a tonic
+        /// </summary>
         public int Priority() {
             // unlikely to collide with another mod's priority
             return 284844701;
