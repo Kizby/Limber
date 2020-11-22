@@ -1,6 +1,6 @@
 namespace XRL.World.Parts {
     using System;
-    using XRL.Language;
+    using AiUnity.Common.Extensions;
 
     [Serializable]
     public class LimberFungusCorpse : Corpse {
@@ -9,15 +9,11 @@ namespace XRL.World.Parts {
         public override bool WantEvent(int ID, int cascade) => base.WantEvent(ID, cascade) || ID == BeforeDeathRemovalEvent.ID;
 
         public override bool HandleEvent(BeforeDeathRemovalEvent E) {
-            // change what's butchered from this to match the original species
-            var species = ParentObject.GetSpecies();
-            if (species != null) {
+            // make a note of the original puffer color on the corpse
+            var color = ParentObject.GetSpecies()?.Before("puff");
+            if (color != null) {
                 CorpseObject = GameObject.create(CorpseBlueprint);
-                var butcherable = CorpseObject.GetPart<Butcherable>();
-                var toButcher = butcherable.OnSuccess + Grammar.InitialCap(species);
-                if (GameObjectFactory.Factory.Blueprints.ContainsKey(toButcher)) {
-                    CorpseObject.GetPart<Butcherable>().OnSuccess = toButcher;
-                }
+                CorpseObject.SetStringProperty("color", color);
             }
             return base.HandleEvent(E);
         }

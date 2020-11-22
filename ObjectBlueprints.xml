@@ -4,7 +4,7 @@
     -->
     <object Name="LimberTonic" Inherits="Tonic">
         <part Name="Render" DisplayName="{{r-r-r-R-R-W distribution|limbic fluid}} injector" />
-        <part Name="Limber_Tonic_Applicator" />
+        <part Name="LimberTonicApplicator" />
         <part Name="RulesDescription" Text="Become a Chimera. If already a Chimera, you gain either a permanent +1 bonus rank to a random physical mutation or a new limb." AltForGenotype="True Kin" GenotypeAlt="You gain a permenant +1 bonus to a random physical attribute." />
         <part Name="TinkerItem" Bits="06" Ingredient="Arsplice Seed" />
         <part Name="PreservableItem" Result="LimberDrop" Number="1" />
@@ -49,35 +49,15 @@
         <part Name="Description" Short="A billion futures yearn to germinate in yielding flesh." />
         <part Name="LimberSporeSac" />
         <part Name="Applicator" />
-        <part Name="GasGrenade" />
+        <part Name="LimberFungalGasGrenade" />
         <removepart Name="Metal" />
         <removepart Name="TinkerItem" />
         <part Name="Commerce" Value="0" />
         <property Name="Understood" />
         <tag Name="ChooseToPreserve" />
         <tag Name="ExcludeFromDynamicEncounters" />
+        <!--tag Name="DetonatedSound" Value="death_weird_1" /-->
     </object>
-    <object Name="LimberSporeSacGoldpuff" Inherits="LimberSporeSac">
-        <part Name="Render" DisplayName="&amp;Wgold&amp;y spore sac" ColorString="&amp;W" />
-        <property Name="Color" Value="Gold" />
-        <part Name="PreservableItem" Result="LimberPreservedGoldpuff" Number="8" />
-    </object>
-    <object Name="LimberSporeSacAzurepuff" Inherits="LimberSporeSac">
-        <part Name="Render" DisplayName="&amp;Bazure&amp;y spore sac" ColorString="&amp;B" />
-        <property Name="Color" Value="Azure" />
-        <part Name="PreservableItem" Result="LimberPreservedAzurepuff" Number="8" />
-    </object>
-    <object Name="LimberSporeSacRosepuff" Inherits="LimberSporeSac">
-        <part Name="Render" DisplayName="&amp;Rrose&amp;y spore sac" ColorString="&amp;R" />
-        <property Name="Color" Value="Rose" />
-        <part Name="PreservableItem" Result="LimberPreservedRosepuff" Number="8" />
-    </object>
-    <object Name="LimberSporeSacJadepuff" Inherits="LimberSporeSac">
-        <part Name="Render" DisplayName="&amp;Gjade&amp;y spore sac" ColorString="&amp;G" />
-        <property Name="Color" Value="Jade" />
-        <part Name="PreservableItem" Result="LimberPreservedJadepuff" Number="8" />
-    </object>
-
     <object Name="LimberPreservedGoldpuff" Inherits="Pickled Mushrooms">
         <part Name="Render" DisplayName="{{W-W-W-M sequence|auric}} pearls" DetailColor="W" />
         <part Name="Description" Short="Reglomerated into palatable morsels, the gold spores still seem somehow eager." />

@@ -5,6 +5,8 @@ namespace XRL.World.Limber {
     using System.Runtime.CompilerServices;
     using Wintellect.PowerCollections;
     using XRL.Language;
+    using XRL.World.Effects;
+    using XRL.World.Parts;
     using XRL.World.Parts.Mutation;
     using XRL.Rules;
     using XRL.UI;
@@ -56,14 +58,42 @@ namespace XRL.World.Limber {
             return parts[index];
         }
 
-        public static Dictionary<string, int> ColorIndices = new Dictionary<string, int> { { "Gold", 0 }, { "Rose", 1 }, { "Azure", 2 }, { "Jade", 3 } };
+        public static Dictionary<string, int> ColorIndices = new Dictionary<string, int> { { "gold", 0 }, { "rose", 1 }, { "azure", 2 }, { "jade", 3 } };
+        public static Dictionary<string, string> ColorRenders = new Dictionary<string, string> { { "gold", "&W" }, { "rose", "&R" }, { "azure", "&B" }, { "jade", "&G" } };
         public static string GetFungalGasFromColor(string Color) {
             Stat.ReseedFrom("PufferType");
-            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[ColorIndices[Color]];
+            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[ColorIndices[Color.ToLower()]];
         }
         public static string GetFungalInfectionFromColor(string Color) {
             Stat.ReseedFrom("PufferType");
-            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[ColorIndices[Color]];
+            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[ColorIndices[Color.ToLower()]];
+        }
+
+        public static void Puff(string color, Cell cell, GameObject actor, GameObject source = null, bool includeCenter = false) {
+            if (source == null) {
+                source = actor;
+            }
+            var localAdjacentCells = cell.GetLocalAdjacentCells();
+            if (includeCenter) {
+                localAdjacentCells.Add(cell);
+            }
+            var PuffObject = GetFungalGasFromColor(color);
+            cell.ParticleBlip("&W*");
+            for (int index = 0; index < localAdjacentCells.Count; ++index) {
+                var gameObject = localAdjacentCells[index].AddObject(PuffObject);
+                Gas gas = gameObject.GetPart<Gas>();
+                gas.ColorString = ColorRenders[color];
+                gas.Creator = actor;
+                if (source.GetPart<GasGrenade>() is GasGrenade gasGrenade) {
+                    gas.Density = gasGrenade.Density;
+                }
+                if (source.HasEffect("Phased")) {
+                    _ = gameObject.ForceApplyEffect(new Phased(Stat.Random(23, 32)));
+                }
+                if (source.HasEffect("Omniphase")) {
+                    _ = gameObject.ForceApplyEffect(new Omniphase(Stat.Random(46, 64)));
+                }
+            }
         }
     }
 }

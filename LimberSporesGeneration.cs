@@ -9,10 +9,14 @@ namespace XRL.World.Parts.Mutation {
             this.Color = Color;
             GasObject = Utility.GetFungalGasFromColor(Color);
             SyncFromBlueprint();
+            DisplayName = Color + " Spore Puffing";
         }
         public override int GetReleaseDuration(int Level) => 1;
         public override int GetReleaseCooldown(int Level) => 50;
         public override string GetReleaseAbilityName() => "Puff " + Color + " Spores";
+        public override void PumpGas() {
+            Utility.Puff(Color, ParentObject.CurrentCell, ParentObject);
+        }
     }
 
     [Serializable]

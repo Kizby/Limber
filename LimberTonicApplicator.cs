@@ -12,7 +12,7 @@ namespace XRL.World.Parts {
 
     [Serializable]
     [MedNamesExtension]
-    public class Limber_Tonic_Applicator : IPart, IMedNamesExtension {
+    public class LimberTonicApplicator : IPart, IMedNamesExtension {
         private static readonly Regex _extraLines = new Regex("\n\n+");
 
         public override void Register(GameObject Object) {
