@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<populations>
+    <population Name="FactionEncounterLeaderInventory_Mechanimists" Load="Merge">
+        <group Name="Items" Load="Merge">
+            <object Blueprint="LimberTonic" Number="0-1" />
+        </group>
+    </population>
+    <population Name="FactionEncounterLeaderInventory_Templar" Load="Merge">
+        <group Name="Items" Load="Merge">
+            <object Blueprint="LimberTonic" Number="0-1" />
+        </group>
+    </population>
+    <population Name="Ingredients_MidTiers" Load="Merge">
+        <group Name="Items" Load="Merge">
+            <object Blueprint="LimberDrop" Number="1" Weight="1" />
+        </group>
+    </population>
+</populations>
