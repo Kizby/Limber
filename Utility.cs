@@ -62,11 +62,37 @@ namespace XRL.World.Limber {
         public static Dictionary<string, string> ColorRenders = new Dictionary<string, string> { { "gold", "&W" }, { "rose", "&R" }, { "azure", "&B" }, { "jade", "&G" } };
         public static string GetFungalGasFromColor(string Color) {
             Stat.ReseedFrom("PufferType");
-            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[ColorIndices[Color.ToLower()]];
+            if (Color == null) {
+                MaybeLog("Null Color in GetFungalGasFromColor");
+                Color = "gold";
+            }
+            if (!ColorIndices.ContainsKey(Color.ToLower())) {
+                MaybeLog($"Unrecognized Color {Color} in GetFungalGasFromColor");
+                Color = "gold";
+            }
+            var index = ColorIndices[Color.ToLower()];
+            if (index < 0 || index > SporePuffer.InfectionObjectList.Count) {
+                MaybeLog($"Index {index} out of bounds in GetFungalGasFromColor (max is {SporePuffer.InfectionObjectList.Count})");
+                index = 0;
+            }
+            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[index];
         }
         public static string GetFungalInfectionFromColor(string Color) {
             Stat.ReseedFrom("PufferType");
-            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[ColorIndices[Color.ToLower()]];
+            if (Color == null) {
+                MaybeLog("Null Color in GetFungalInfectionFromColor");
+                Color = "gold";
+            }
+            if (!ColorIndices.ContainsKey(Color.ToLower())) {
+                MaybeLog($"Unrecognized Color {Color} in GetFungalInfectionFromColor");
+                Color = "gold";
+            }
+            var index = ColorIndices[Color.ToLower()];
+            if (index < 0 || index > SporePuffer.InfectionObjectList.Count) {
+                MaybeLog($"Index {index} out of bounds in GetFungalInfectionFromColor (max is {SporePuffer.InfectionObjectList.Count})");
+                index = 0;
+            }
+            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[index];
         }
 
         public static void Puff(string color, Cell cell, GameObject actor, GameObject source = null, bool includeCenter = false) {
