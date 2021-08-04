@@ -2,15 +2,13 @@ namespace XRL.World.Parts {
     using Limber;
 
     public class LimberFungalGasGrenade : GasGrenade {
-        private string color;
-
         public string Color {
-            get => color; set {
-                color = value;
-                GasObject = Utility.GetFungalGasFromColor(color);
+            get => ParentObject.GetStringProperty("color"); set {
+                ParentObject.SetStringProperty("color", value);
+                GasObject = Utility.GetFungalGasFromColor(value);
                 var render = ParentObject.GetPart<Render>();
-                render.ColorString = Utility.ColorRenders[color];
-                render.DisplayName = render.ColorString + color + "&y spore sac";
+                render.ColorString = Utility.ColorRenders[value];
+                render.DisplayName = render.ColorString + value + "&y spore sac";
             }
         }
 
