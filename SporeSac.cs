@@ -14,7 +14,7 @@ namespace XRL.World.Parts {
         public override bool FireEvent(Event E) {
             if (E.ID == "ObjectExtracted") {
                 var source = E.GetGameObjectParameter("Source");
-                var color = source.Property["color"];
+                var color = source.GetTag("Color");
                 ParentObject.GetPart<LimberFungalGasGrenade>().Color = color;
                 var preservable = ParentObject.RequirePart<PreservableItem>();
                 preservable.Result = "LimberPreserved" + char.ToUpper(color[0]) + color.Substring(1) + "puff";

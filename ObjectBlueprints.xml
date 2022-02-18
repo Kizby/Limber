@@ -28,8 +28,17 @@
     <!--
         spore sacs
     -->
-    <object Name="FungusPuffer" Load="Merge">
-        <part Name="LimberFungusCorpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse" />
+    <object Name="FungusPuffer1" Load="Merge">
+        <part Name="Corpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse1" />
+    </object>
+    <object Name="FungusPuffer2" Load="Merge">
+        <part Name="Corpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse2" />
+    </object>
+    <object Name="FungusPuffer3" Load="Merge">
+        <part Name="Corpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse3" />
+    </object>
+    <object Name="FungusPuffer4" Load="Merge">
+        <part Name="Corpse" CorpseChance="100" CorpseBlueprint="LimberFungusCorpse4" />
     </object>
 
     <object Name="LimberFungusCorpse" Inherits="Corpse">
@@ -42,6 +51,18 @@
         <tag Name="ExcludeFromDynamicEncounters" Value="*noinherit" />
         <tag Name="Gender" Value="plural" />
         <intproperty Name="Bleeds" Value="0" />
+    </object>
+    <object Name="LimberFungusCorpse1" Inherits="LimberFungusCorpse">
+        <tag Name="Color" Value="gold" />
+    </object>
+    <object Name="LimberFungusCorpse2" Inherits="LimberFungusCorpse">
+        <tag Name="Color" Value="azure" />
+    </object>
+    <object Name="LimberFungusCorpse3" Inherits="LimberFungusCorpse">
+        <tag Name="Color" Value="rose" />
+    </object>
+    <object Name="LimberFungusCorpse4" Inherits="LimberFungusCorpse">
+        <tag Name="Color" Value="jade" />
     </object>
 
     <object Name="LimberSporeSac" Inherits="Grenade">
