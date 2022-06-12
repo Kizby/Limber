@@ -71,11 +71,11 @@ namespace XRL.World.Limber {
                 Color = "gold";
             }
             var index = ColorIndices[Color.ToLower()];
-            if (index < 0 || index > SporePuffer.InfectionObjectList.Count) {
-                MaybeLog($"Index {index} out of bounds in GetFungalGasFromColor (max is {SporePuffer.InfectionObjectList.Count})");
+            if (index < 0 || index > SporePuffer.InfectionList.Count) {
+                MaybeLog($"Index {index} out of bounds in GetFungalGasFromColor (max is {SporePuffer.InfectionList.Count})");
                 index = 0;
             }
-            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[index];
+            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[index];
         }
         public static string GetFungalInfectionFromColor(string Color) {
             Stat.ReseedFrom("PufferType");
@@ -88,11 +88,11 @@ namespace XRL.World.Limber {
                 Color = "gold";
             }
             var index = ColorIndices[Color.ToLower()];
-            if (index < 0 || index > SporePuffer.InfectionObjectList.Count) {
-                MaybeLog($"Index {index} out of bounds in GetFungalInfectionFromColor (max is {SporePuffer.InfectionObjectList.Count})");
+            if (index < 0 || index > SporePuffer.InfectionList.Count) {
+                MaybeLog($"Index {index} out of bounds in GetFungalInfectionFromColor (max is {SporePuffer.InfectionList.Count})");
                 index = 0;
             }
-            return Algorithms.RandomShuffle(SporePuffer.InfectionObjectList)[index];
+            return Algorithms.RandomShuffle(SporePuffer.InfectionList)[index];
         }
 
         public static void Puff(string color, Cell cell, GameObject actor, GameObject source = null, bool includeCenter = false) {
