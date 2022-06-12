@@ -12,7 +12,7 @@ namespace XRL.World.Parts {
             }
         }
 
-        public override bool Detonate(Cell C, GameObject Actor = null, GameObject ApparentTarget = null, bool Indirect = false) {
+        protected override bool DoDetonate(Cell C, GameObject Actor = null, GameObject ApparentTarget = null, bool Indirect = false) {
             PlayWorldSound(GetPropertyOrTag("DetonatedSound"), 1f, combat: true);
             Utility.Puff(Color, C, Actor, ParentObject, true);
             DidX("burst", terminalPunctuation: "!");
